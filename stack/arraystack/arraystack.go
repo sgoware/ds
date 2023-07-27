@@ -20,11 +20,11 @@ type Stack struct {
 }
 
 func New(values ...any) *Stack {
-	return &Stack{list: arraylist.New(values)}
+	return &Stack{list: arraylist.New(values...)}
 }
 
 func (g *Group) New(values ...any) *Stack {
-	return New(values)
+	return New(values...)
 }
 
 func (q *Stack) Empty() bool {
