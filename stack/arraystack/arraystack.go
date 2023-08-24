@@ -58,7 +58,7 @@ func (q *Stack) String() string {
 }
 
 func (q *Stack) Push(values ...any) {
-	q.list.PushBack(values)
+	q.list.PushBack(values...)
 }
 
 func (q *Stack) Pop() bool {
