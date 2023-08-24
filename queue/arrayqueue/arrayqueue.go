@@ -59,7 +59,7 @@ func (q *Queue) String() string {
 }
 
 func (q *Queue) Push(values ...any) {
-	q.list.PushBack(values)
+	q.list.PushBack(values...)
 }
 
 func (q *Queue) Pop() bool {
