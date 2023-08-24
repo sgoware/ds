@@ -21,11 +21,11 @@ type Queue struct {
 }
 
 func New(values ...any) *Queue {
-	return &Queue{list: arraylist.New(values)}
+	return &Queue{list: arraylist.New(values...)}
 }
 
 func (g *Group) New(values ...any) *Queue {
-	return New(values)
+	return New(values...)
 }
 
 func (q *Queue) Empty() bool {
