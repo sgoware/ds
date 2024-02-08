@@ -10,8 +10,6 @@ import (
 	"sort"
 )
 
-type Group struct{}
-
-func Sort(values []interface{}, comparator comparator.Comparator) {
-	sort.Sort(sortable{values, comparator})
+func Sort[T any](values []T, comparator comparator.Comparator[T]) {
+	sort.Sort(sortable[T]{values, comparator})
 }

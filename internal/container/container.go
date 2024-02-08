@@ -5,7 +5,7 @@
 
 package container
 
-type Container interface {
+type Container[T any] interface {
 	// Empty return true if container does not contain any elements
 	Empty() bool
 	// Len return number of elements within the container
@@ -13,7 +13,7 @@ type Container interface {
 	// Clear remove all elements from the container
 	Clear()
 	// Values return all elements of the container
-	Values() []any
+	Values() []T
 	// String return a string representation of the container
 	String() string
 }

@@ -6,9 +6,9 @@
 package iterator
 
 // ForwardIterator is an iterator that can only move forward through a sequence of elements.
-type ForwardIterator interface {
+type ForwardIterator[T any] interface {
 	// Value returns current elements' value.
-	Value() any
+	Value() T
 
 	// First moves the iterator to the first element.
 	// returns false if container does not have any element.
@@ -24,9 +24,9 @@ type ForwardIterator interface {
 }
 
 // ReverseIterator is an iterator that moves backwards through a sequence of elements.
-type ReverseIterator interface {
+type ReverseIterator[T any] interface {
 	// Value returns current elements' value.
-	Value() any
+	Value() T
 
 	// Last moves the iterator to the last element.
 	// returns false if container does not have any elements.
@@ -42,14 +42,14 @@ type ReverseIterator interface {
 }
 
 // BidirectionalIterator is an iterator that can move forward or backward one element at a time.
-type BidirectionalIterator interface {
-	ForwardIterator
-	ReverseIterator
+type BidirectionalIterator[T any] interface {
+	ForwardIterator[T]
+	ReverseIterator[T]
 }
 
 // RandomAccessIterator is an iterator that can move forward or backward any number of elements at a time
 // and should support O(1) time complexity for random access to elements.
-type RandomAccessIterator interface {
-	BidirectionalIterator
+type RandomAccessIterator[T any] interface {
+	BidirectionalIterator[T]
 	To(index int) bool
 }

@@ -9,10 +9,8 @@ import (
 	"github.com/sgoware/ds/queue/arrayqueue"
 )
 
-type Group struct{}
+type Group[T any] struct{}
 
-var insArrayQueue = arrayqueue.Group{}
-
-func (g *Group) ArrayQueue() *arrayqueue.Group {
-	return &insArrayQueue
+func (g *Group[T]) ArrayQueue() *arrayqueue.Group[T] {
+	return &arrayqueue.Group[T]{}
 }

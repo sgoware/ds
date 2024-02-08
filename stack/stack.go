@@ -9,10 +9,8 @@ import (
 	"github.com/sgoware/ds/stack/arraystack"
 )
 
-type Group struct{}
+type Group[T any] struct{}
 
-var insArrayStack = arraystack.Group{}
-
-func (g *Group) ArrayStack() *arraystack.Group {
-	return &insArrayStack
+func (g *Group[T]) ArrayStack() *arraystack.Group[T] {
+	return &arraystack.Group[T]{}
 }

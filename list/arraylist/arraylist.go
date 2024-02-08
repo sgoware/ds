@@ -13,14 +13,18 @@ import (
 	"strings"
 )
 
-type Group struct{}
+type Group[T any] struct{}
+
+const (
+	name = "ArrayList"
+)
 
 // Assert internal.List interface implementation
-var _ internal.List = (*List)(nil)
+var _ internal.List[int] = (*List[int])(nil)
 
 // List stores elements using a slice
-type List struct {
-	elements []any
+type List[T any] struct {
+	elements []T
 	size     int
 }
 
@@ -29,8 +33,8 @@ const (
 	shrinkFactor = float32(0.25)
 )
 
-func New(values ...any) *List {
-	l := &List{}
+func New[T any](values ...T) *List[T] {
+	l := &List[T]{}
 
 	if len(values) > 0 {
 		l.PushBack(values...)
@@ -39,29 +43,29 @@ func New(values ...any) *List {
 	return l
 }
 
-func (g *Group) New(values ...any) *List {
+func (g *Group[T]) New(values ...T) *List[T] {
 	return New(values...)
 }
 
-func (l *List) Empty() bool {
+func (l *List[T]) Empty() bool {
 	return l.size == 0
 }
 
-func (l *List) Len() int {
+func (l *List[T]) Len() int {
 	return l.size
 }
 
-func (l *List) Clear() {
+func (l *List[T]) Clear() {
 	l.size = 0
-	l.elements = []any{}
+	l.elements = []T{}
 }
 
-func (l *List) Values() []any {
+func (l *List[T]) Values() []T {
 	return l.elements
 }
 
-func (l *List) String() string {
-	str := "ArrayList\n"
+func (l *List[T]) String() string {
+	str := name + "\n"
 
 	var values []string
 
@@ -74,7 +78,7 @@ func (l *List) String() string {
 	return str
 }
 
-func (l *List) Insert(index int, values ...any) bool {
+func (l *List[T]) Insert(index int, values ...T) bool {
 	if !l.withinRange(index) {
 		return false
 	}
@@ -89,7 +93,7 @@ func (l *List) Insert(index int, values ...any) bool {
 	return true
 }
 
-func (l *List) PushFront(values ...any) {
+func (l *List[T]) PushFront(values ...T) {
 	l.growBy(len(values))
 
 	size := len(values)
@@ -100,7 +104,7 @@ func (l *List) PushFront(values ...any) {
 	l.size += size
 }
 
-func (l *List) PushBack(values ...any) {
+func (l *List[T]) PushBack(values ...T) {
 	l.growBy(len(values))
 
 	for _, value := range values {
@@ -109,12 +113,12 @@ func (l *List) PushBack(values ...any) {
 	}
 }
 
-func (l *List) Remove(index int) bool {
+func (l *List[T]) Remove(index int) bool {
 	if !l.withinRange(index) {
 		return false
 	}
 
-	l.elements[index] = nil
+	clear(l.elements[index : index+1])
 	copy(l.elements[index:], l.elements[index+1:l.size])
 	l.size--
 
@@ -123,15 +127,15 @@ func (l *List) Remove(index int) bool {
 	return true
 }
 
-func (l *List) PopFront() bool {
+func (l *List[T]) PopFront() bool {
 	return l.Remove(0)
 }
 
-func (l *List) PopBack() bool {
+func (l *List[T]) PopBack() bool {
 	return l.Remove(l.size - 1)
 }
 
-func (l *List) Set(index int, value any) bool {
+func (l *List[T]) Set(index int, value T) bool {
 	if !l.withinRange(index) {
 		return false
 	}
@@ -141,7 +145,7 @@ func (l *List) Set(index int, value any) bool {
 	return true
 }
 
-func (l *List) Swap(i, j int) bool {
+func (l *List[T]) Swap(i, j int) bool {
 	if l.withinRange(i) && l.withinRange(j) {
 		l.elements[i], l.elements[j] = l.elements[j], l.elements[i]
 		return true
@@ -151,7 +155,7 @@ func (l *List) Swap(i, j int) bool {
 }
 
 // Get value by index
-func (l *List) Get(index int) (any, bool) {
+func (l *List[T]) Get(index int) (any, bool) {
 	if !l.withinRange(index) {
 		return nil, false
 	}
@@ -159,29 +163,29 @@ func (l *List) Get(index int) (any, bool) {
 	return l.elements[index], true
 }
 
-func (l *List) Front() (any, bool) {
+func (l *List[T]) Front() (any, bool) {
 	return l.Get(0)
 }
 
-func (l *List) Back() (any, bool) {
+func (l *List[T]) Back() (any, bool) {
 	return l.Get(l.size - 1)
 }
 
-func (l *List) Sort(comparator comparator.Comparator) {
-	sort.Sort(l.elements[:l.size], comparator)
+func (l *List[T]) Sort(comparator comparator.Comparator[T]) {
+	sort.Sort[T](l.elements[:l.size], comparator)
 }
 
-func (l *List) withinRange(index int) bool {
+func (l *List[T]) withinRange(index int) bool {
 	return index >= 0 && index < l.size
 }
 
-func (l *List) resize(cap int) {
-	newElements := make([]any, cap)
+func (l *List[T]) resize(cap int) {
+	newElements := make([]T, cap)
 	copy(newElements, l.elements)
 	l.elements = newElements
 }
 
-func (l *List) growBy(n int) {
+func (l *List[T]) growBy(n int) {
 	curCap := cap(l.elements)
 
 	if l.size+n >= curCap {
@@ -190,7 +194,7 @@ func (l *List) growBy(n int) {
 	}
 }
 
-func (l *List) shrink() {
+func (l *List[T]) shrink() {
 	if shrinkFactor == 0.0 {
 		return
 	}

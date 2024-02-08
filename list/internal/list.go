@@ -10,22 +10,22 @@ import (
 	"github.com/sgoware/ds/utils/comparator"
 )
 
-type List interface {
-	container.Container
+type List[T any] interface {
+	container.Container[T]
 
 	// Insert given values after the element by the index
-	Insert(index int, values ...any) bool
-	PushFront(value ...any)
+	Insert(index int, values ...T) bool
+	PushFront(value ...T)
 
 	// Remove value by index
 	Remove(index int) bool
 	PopFront() bool
 
 	// Set value to the element by the index
-	Set(index int, value any) bool
+	Set(index int, value T) bool
 	// Swap two element by the indies
 	Swap(index1, index2 int) bool
 
 	// Sort list by the given comparator
-	Sort(comparator comparator.Comparator)
+	Sort(comparator comparator.Comparator[T])
 }

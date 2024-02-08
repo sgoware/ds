@@ -6,26 +6,26 @@
 package iterator
 
 // ForwardIteratorWithIndex is a forward iterator whose values can be fetched by an index.
-type ForwardIteratorWithIndex interface {
-	ForwardIterator
+type ForwardIteratorWithIndex[T any] interface {
+	ForwardIterator[T]
 	Index() int
 }
 
 // ReverseIteratorWithIndex is a reverse iterator whose values can be fetched by an index.
-type ReverseIteratorWithIndex interface {
-	ReverseIterator
+type ReverseIteratorWithIndex[T any] interface {
+	ReverseIterator[T]
 	Index() int
 }
 
 // BidirectionalIteratorWithIndex is a bidirectional iterator whose values can be fetched by an index.
-type BidirectionalIteratorWithIndex interface {
-	ForwardIterator
-	ReverseIterator
+type BidirectionalIteratorWithIndex[T any] interface {
+	ForwardIterator[T]
+	ReverseIterator[T]
 	Index() int
 }
 
 // RandomAccessIteratorWithIndex is a random access iterator whose values can be fetched by an index.
-type RandomAccessIteratorWithIndex interface {
-	RandomAccessIterator
+type RandomAccessIteratorWithIndex[T any] interface {
+	RandomAccessIterator[T]
 	Index() int
 }

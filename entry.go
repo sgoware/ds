@@ -12,25 +12,18 @@ import (
 	"github.com/sgoware/ds/utils"
 )
 
-var (
-	insUtils = utils.Group{}
-	insList  = list.Group{}
-	insQueue = queue.Group{}
-	insStack = stack.Group{}
-)
-
 func Utils() *utils.Group {
-	return &insUtils
+	return &utils.Group{}
 }
 
-func List() *list.Group {
-	return &insList
+func List[T any]() *list.Group[T] {
+	return &list.Group[T]{}
 }
 
-func Queue() *queue.Group {
-	return &insQueue
+func Queue[T any]() *queue.Group[T] {
+	return &queue.Group[T]{}
 }
 
-func Stack() *stack.Group {
-	return &insStack
+func Stack[T any]() *stack.Group[T] {
+	return &stack.Group[T]{}
 }

@@ -7,6 +7,6 @@ package internal
 
 import "github.com/sgoware/ds/internal/container"
 
-type Queue interface {
-	container.Container
+type Queue[T any] interface {
+	container.Container[T]
 }

@@ -6,26 +6,26 @@
 package iterator
 
 // ForwardIteratorWithKey is a forward iterator whose elements are k-v pairs.
-type ForwardIteratorWithKey interface {
-	ForwardIterator
-	Key() any
+type ForwardIteratorWithKey[T comparable] interface {
+	ForwardIterator[T]
+	Key() T
 }
 
 // ReverseIteratorKey is a forward iterator whose elements are k-v pairs.
-type ReverseIteratorKey interface {
-	ReverseIterator
-	Key() any
+type ReverseIteratorKey[T comparable] interface {
+	ReverseIterator[T]
+	Key() T
 }
 
 // BidirectionalIteratorKey is a forward iterator whose elements are k-v pairs.
-type BidirectionalIteratorKey interface {
-	ForwardIterator
-	ReverseIterator
-	Key() any
+type BidirectionalIteratorKey[T comparable] interface {
+	ForwardIterator[T]
+	ReverseIterator[T]
+	Key() T
 }
 
 // RandomIteratorKey is a forward iterator whose elements are k-v pairs.
-type RandomIteratorKey interface {
-	RandomAccessIterator
-	Key() any
+type RandomIteratorKey[T comparable] interface {
+	RandomAccessIterator[T]
+	Key() T
 }

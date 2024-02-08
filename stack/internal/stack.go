@@ -7,6 +7,6 @@ package internal
 
 import "github.com/sgoware/ds/internal/container"
 
-type Stack interface {
-	container.Container
+type Stack[T any] interface {
+	container.Container[T]
 }

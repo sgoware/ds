@@ -12,40 +12,44 @@ import (
 	"strings"
 )
 
-type Group struct{}
+type Group[T any] struct{}
 
-var _ internal.Queue = (*Queue)(nil)
+const (
+	name = "ArrayQueue"
+)
 
-type Queue struct {
-	list *arraylist.List
+var _ internal.Queue[int] = (*Queue[int])(nil)
+
+type Queue[T any] struct {
+	list *arraylist.List[T]
 }
 
-func New(values ...any) *Queue {
-	return &Queue{list: arraylist.New(values...)}
+func New[T any](values ...T) *Queue[T] {
+	return &Queue[T]{list: arraylist.New(values...)}
 }
 
-func (g *Group) New(values ...any) *Queue {
+func (g *Group[T]) New(values ...T) *Queue[T] {
 	return New(values...)
 }
 
-func (q *Queue) Empty() bool {
+func (q *Queue[T]) Empty() bool {
 	return q.list.Empty()
 }
 
-func (q *Queue) Len() int {
+func (q *Queue[T]) Len() int {
 	return q.list.Len()
 }
 
-func (q *Queue) Clear() {
+func (q *Queue[T]) Clear() {
 	q.list.Clear()
 }
 
-func (q *Queue) Values() []any {
+func (q *Queue[T]) Values() []T {
 	return q.list.Values()
 }
 
-func (q *Queue) String() string {
-	str := "ArrayQueue\n"
+func (q *Queue[T]) String() string {
+	str := name + "\n"
 
 	values := make([]string, 0, q.list.Len())
 
@@ -58,14 +62,14 @@ func (q *Queue) String() string {
 	return str
 }
 
-func (q *Queue) Push(values ...any) {
+func (q *Queue[T]) Push(values ...T) {
 	q.list.PushBack(values...)
 }
 
-func (q *Queue) Pop() bool {
+func (q *Queue[T]) Pop() bool {
 	return q.list.PopFront()
 }
 
-func (q *Queue) Top() (any, bool) {
+func (q *Queue[T]) Top() (T, bool) {
 	return q.list.Front()
 }

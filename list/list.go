@@ -9,10 +9,8 @@ import (
 	"github.com/sgoware/ds/list/arraylist"
 )
 
-type Group struct{}
+type Group[T any] struct{}
 
-var insArrayList = arraylist.Group{}
-
-func (g *Group) ArrayList() *arraylist.Group {
-	return &insArrayList
+func (g *Group[T]) ArrayList() *arraylist.Group[T] {
+	return &arraylist.Group[T]{}
 }

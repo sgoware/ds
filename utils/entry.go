@@ -7,20 +7,10 @@ package utils
 
 import (
 	"github.com/sgoware/ds/utils/comparator"
-	"github.com/sgoware/ds/utils/sort"
 )
 
 type Group struct{}
 
-var (
-	insComparator = comparator.Group{}
-	insSort       = sort.Group{}
-)
-
 func (g *Group) Comparator() *comparator.Group {
-	return &insComparator
-}
-
-func (g *Group) Sort() *sort.Group {
-	return &insSort
+	return &comparator.Group{}
 }
